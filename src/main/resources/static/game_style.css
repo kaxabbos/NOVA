@@ -1,0 +1,43 @@
+main div.col-lg-12 h1 {
+    text-align: center;
+}
+
+main img.poster-game {
+    width: 100%;
+    border: 1px solid silver;
+    border-radius: 5px;
+    box-shadow: 0 0 10px;
+}
+
+main div.col-lg-8 div a {
+    text-decoration: none;
+}
+
+main div.col-lg-12 h4 {
+    text-align: center;
+}
+
+main p.description {
+    text-align: justify;
+}
+
+main div.photo {
+    overflow: none;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+main div.photo img {
+    display: inline-block;
+    vertical-align: top;
+    width: 23%;
+    border-radius: 5px;
+    margin: 1%;
+    box-shadow: 0 0 5px;
+}
+
+main img.review {
+    border-radius: 5px;
+    width: 80%;
+    box-shadow: 0 0 10px;
+}

@@ -1,0 +1,26 @@
+header div ul {
+    font-size: 1.2em;
+}
+
+img.img_nova_logo {
+    height: 30px;
+}
+
+main {
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+
+footer div a img {
+    height: 25px;
+}
+
+footer div.col-lg-8 a {
+    float: right;
+    margin-right: 2%;
+}
+
+hr.clear {
+    clear: both;
+    visibility: hidden;
+}

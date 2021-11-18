@@ -1,0 +1,66 @@
+<!DOCTYPE HTML>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>NOVA - Профиль</title>
+    <link rel="stylesheet" href="/static/login_reg_profile_style.css">
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body class="d-flex flex-column h-100">
+
+<header th:insert="blocks\header :: header" class="sticky-top" role="navigation"></header>
+
+<hr class="clear">
+
+<main class="container flex-shrink-0 bg-light form-signin">
+    <div class="pt-5 pb-3">
+        <center>
+            <img class="mb-4" src="/img/nova_logo.png" alt="NOVA">
+        </center>
+    </div>
+    <center>
+        <div class="row">
+            <h2>Обновить данные профилей</h2>
+            <div class="col-lg-12 my-1 input-group">
+                <span class="form-control">Имя</span>
+                <span class="form-control">Пароль</span>
+                <span class="form-control">Роль</span>
+                <span class="form-control">Редактирование</span>
+                <span class="form-control"></span>
+                <span class="form-control"></span>
+            </div>
+        </div>
+        <div class="row" th:each="user : ${users}">
+            <div class="col-lg-10 my-1">
+                <form class="input-group" th:action="'/userList/' + ${user.id} + '/edit'" method="post">
+                    <input class="form-control" th:value="${user.username}" name="username"/>
+                    <input class="form-control" th:value="${user.password}" name="password"/>
+                    <span class="form-control" th:text="${user.role}"></span>
+                    <select class="form-control" name="role">
+                        <option value="USER">Покупатель</option>
+                        <option value="PUB">Продавец</option>
+                        <option value="ADMIN">Админ</option>
+                    </select>
+                    <button class="btn form-control btn-primary" type="submit">Обновить</button>
+                </form>
+            </div>
+            <div class="col-lg-2 my-1">
+                <form class="input-group" th:action="'/userList/' + ${user.id} + '/delete'"
+                      method="post">
+                    <button class="form-control btn btn-danger" type="submit">Удалить</button>
+                </form>
+            </div>
+        </div>
+        <p class="mt-3 mb-3 text-muted">© 2021</p>
+    </center>
+</main>
+
+<hr class="clear">
+
+<footer th:insert="blocks/footer :: footer" class="footer mt-auto py-1 bg-dark"></footer>
+
+</body>
+
+</html>

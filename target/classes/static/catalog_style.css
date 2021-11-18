@@ -1,0 +1,28 @@
+main div.col-lg-4 h4 {
+    text-align: center;
+}
+
+main button.btn-lg {
+    width: 50%;
+}
+
+main #genre {
+    width: 80%;
+}
+
+main a.game {
+    text-decoration: none;
+}
+
+main img.game-photo {
+    width: 100%;
+    max-height: 350px;
+    border-radius: 5px 5px 0 0;
+}
+
+main input.date-range {
+    background-color: #f9f9f9;
+    text-align: center;
+    border: 0;
+    width: 120px;
+}

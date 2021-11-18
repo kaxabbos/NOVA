@@ -1,0 +1,28 @@
+main div.col-lg-4 {
+    width: 33.33%;
+}
+
+main h4 {
+    text-align: center;
+}
+
+main div.row div {
+    margin: 1% 0;
+}
+
+main div.size-150 label {
+    width: 150px;
+}
+
+main div.size-200 label {
+    width: 200px;
+}
+
+main div.line {
+    border-right: 2px solid gray;
+}
+
+main textarea {
+    width: 100%;
+    min-height: 100px;
+}

@@ -1,0 +1,121 @@
+<!DOCTYPE HTML>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head th:each="game : ${games}">
+    <title th:text="'NOVA - ' + ${game.name}"></title>
+    <link rel="stylesheet" href="/static/game_style.css">
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body class="d-flex flex-column h-100" style="">
+
+<header th:insert="blocks\header :: header" class="sticky-top" role="navigation"></header>
+
+<hr class="clear">
+
+<main class="container-lg flex-shrink-0 bg-light">
+    <div class="row" th:each="game : ${games}">
+        <div class="col-lg-12 my-3">
+            <h1 th:text="${game.name}">Name</h1>
+        </div>
+        <div class="col-lg-4 mb-3">
+            <img class="poster-game" th:attr="src=${'/img/' + game.poster}">
+            <div th:unless="${buy} or ${cart} or ${role == 'ADMIN'} or ${userid}" class="btn-group mt-3">
+                <form th:action="'/game/' + ${game.id} + '/add_cart'" method="post">
+                    <button class="btn btn-primary">Добавить в корзину</button>
+                </form>
+            </div>
+            <div th:unless="${buy} or ${role == 'ADMIN'} or ${userid}" class="btn-group mt-3">
+                <form th:action="'/game/' + ${game.id} + '/buy'" method="post">
+                    <button class="btn btn-primary">Купить</button>
+                </form>
+            </div>
+            <div th:if="${buy} or ${role == 'ADMIN'} or ${userid}" class="btn-group mt-3">
+                <a th:href="${game.file}" class="btn btn-primary">Скачать</a>
+            </div>
+            <div th:if="${userid} or ${role == 'ADMIN'}" class="btn-group mt-3">
+                <a th:href="'/game/' + ${game.id} + '/edit'" class="btn btn-primary">Редактировать</a>
+            </div>
+            <div th:if="${userid} or ${role == 'ADMIN'}" class="btn-group mt-3">
+                <a th:href="'/game/' + ${game.id} + '/delete'" class="btn btn-danger">Удалить</a>
+            </div>
+        </div>
+        <div class="col-lg-8">
+            <div>
+                <div><b>Год выпуска: </b><a th:text="${game.year}" th:href="'/catalog/year/' + ${game.year}"></a></div>
+                <div><b>Жанр: </b><span><a th:text="${game.genre}"
+                                           th:href="'/catalog/genre/' + ${game.genre}"></a></span>
+                </div>
+                <div><b>Разработчик: </b><span th:text="${game.dev}"></span></div>
+                <div><b>Издатель: </b><span th:text="${game.pub}"></span></div>
+                <div><b>Версия: </b><span th:text="${game.version}"></span></div>
+                <div><b>Язык: </b><span th:text="${game.language}"></span></div>
+                <div th:if="${game.price}"><b>Цена: </b><span th:text="${game.price}"></span> $</div>
+                <div th:unless="${game.price}"><b>Бесплатно</b></div>
+            </div>
+            <div class="mt-3">
+                <h3>Системные требования</h3>
+                <div>&#9679; Операционная система: <span th:text="${game.os}"></span></div>
+                <div>&#9679; Процессор: <span th:text="${game.proc}"></span></div>
+                <div>&#9679; Видеокарта: <span th:text="${game.videocard}"></span></div>
+                <div>&#9679; Оперативная память: <span th:text="${game.ram}"></span>
+                    <span th:text="${game.switchram}"></span></div>
+                <div>&#9679; Звуковое устройство: <span th:text="${game.sound}"></span></div>
+                <div>&#9679; Занимаемое место: <span th:text="${game.place}"></span>
+                    <span th:text="${game.switchplace}"></span></div>
+            </div>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <h4>Описание</h4>
+            <p class="description text-break" th:text="${game.description}"></p>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <h4>Скриншоты</h4>
+            <center>
+                <div th:each="i : ${game.screenshots}">
+                    <img class="poster-game my-2" th:attr="src=${'/img/' + i}">
+                </div>
+                <hr class="clear">
+            </center>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12 mt-5" th:each="game : ${games}">
+            <form th:action="'/game/' + ${game.id} + '/comment_add/'" method="post">
+                <h4>Отзывы</h4>
+                <div class="alert alert-primary">
+                    <input type="text" id="date" name="date" hidden readonly>
+                    <textarea placeholder="Добавить отзыв..." class="form-control" name="comment" id="comment"
+                              required></textarea>
+                    <div class="btn-group mt-2">
+                        <button class="btn btn-primary" type="submit">Добавить отзыв</button>
+                        <button class="btn btn-primary" type="reset">Очистить</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="col-lg-12" th:each="com : ${comments}">
+            <div class="alert alert-secondary">
+                <h5>
+                    <span th:text="${com.username}">User-name</span>
+                    <span>|</span>
+                    <span th:text="${com.date}">Date</span>
+                </h5>
+                <hr>
+                <p class="description text-break" th:text="${com.comment}">Comment</p>
+            </div>
+        </div>
+    </div>
+    <div class="pt-5"></div>
+</main>
+
+<script type="text/javascript" src="/static/game_script.js"></script>
+
+<hr class="clear">
+
+<footer th:insert="blocks/footer :: footer" class="footer mt-auto py-1 bg-dark"></footer>
+
+</body>
+
+</html>

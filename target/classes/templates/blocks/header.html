@@ -1,0 +1,31 @@
+<div th:fragment="header">
+    <header class="p-2 bg-dark text-white">
+        <div class="container">
+            <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
+                <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
+                    <li><a href="/" class="nav-link px-2 text-white">Главная</a></li>
+                    <li><a href="/catalog/all" class="nav-link px-2 text-white">Каталог</a></li>
+                    <li><a href="/about" class="nav-link px-2 text-white">О нас</a></li>
+                    <li th:if="${role == 'ADMIN' || role == 'PUB'}">
+                        <a href="/game/add" class="nav-link px-2 text-white">Добавить игру</a>
+                    </li>
+                    <li><a href="/cart" class="nav-link px-2 text-white">Корзина</a></li>
+                </ul>
+                <form th:if="${role != 'NOT'}" action="/catalog/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
+                      method="post">
+                    <input type="search" name="search" class="form-control form-control-dark" placeholder="Поиск...">
+                </form>
+                <div class="text-end">
+                    <a th:if="${role == 'NOT'}" href="/login" type="button" class="btn btn-outline-light me-2">Войти</a>
+                    <a th:if="${role != 'NOT' && role != 'USER'}" href="/sales" type="button"
+                       class="btn btn-outline-light me-2">Статистика</a>
+                    <a th:if="${role == 'ADMIN'}" href="/userList" type="button" class="btn btn-outline-light me-2">Профили</a>
+                    <a th:if="${role == 'NOT'}" href="/reg" type="button" class="btn btn-warning">Регистрация</a>
+                    <form th:if="${role != 'NOT'}" class="btn" action="/logout" method="post">
+                        <button class="btn btn-warning">Выйти</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </header>
+</div>

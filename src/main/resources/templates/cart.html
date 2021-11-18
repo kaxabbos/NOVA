@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html class="h-100" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>NOVA - Корзина</title>
+    <link rel="stylesheet" href="/static/cart_style.css">
+</head>
+
+<head th:insert="blocks\head :: head"></head>
+
+<body class="d-flex flex-column h-100">
+
+<header th:insert="blocks\header :: header" class="sticky-top" role="navigation"></header>
+
+<hr class="clear">
+
+<main class="container-lg flex-shrink-0 bg-light">
+    <div class="row">
+        <div th:unless="${games}" class="col-lg-12 mt-3">
+            <center><h1>Корзина пуста</h1></center>
+        </div>
+        <div class="col-lg-12 mt-3">
+            <div class="alert alert-primary" th:each="game : ${games}">
+                <div class="row">
+                    <div class="col-lg-2 poster">
+                        <img th:attr="src=${'/img/' + game.poster}">
+                    </div>
+                    <div class="col-lg-5">
+                        <h4 th:text="${game.name}" class="card-title pricing-card-title mx-3 text-break">Название</h4>
+                        <ul class="list-unstyled mt-3 mb-3 mx-3">
+                            <li><b>Жанр:</b> <span th:text="${game.genre}"></span></li>
+                            <li><b>Дата:</b> <span th:text="${game.year}"></span></li>
+                            <li th:if="${game.price}"><b>Цена:</b> <span th:text="${game.price}"></span> $</li>
+                            <li th:unless="${game.price}"><b>Бесплатно</b></li>
+                        </ul>
+                    </div>
+                    <div class="col-lg-5 buy">
+                        <form th:action="'/game/' + ${game.id} +'/buy'" method="post" class="btn-group mt-3 w-100">
+                            <button class="btn btn-primary">Купить</button>
+                        </form>
+                        <form th:action="'/game/' + ${game.id} + '/remove_cart'" method="post"
+                              class="btn-group mt-3 w-100">
+                            <button class="btn btn-primary">Убрать</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div th:if="${summary}" class="alert alert-primary">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <span>Общая стоимость</span>
+                        <span th:text="${summary}">Сумма</span>
+                        <span>$</span>
+                    </div>
+                    <div class="col-lg-6"></div>
+                </div>
+            </div>
+        </div>
+        <div th:if="${more}" class="btn-group mt-3">
+            <form action="/game/buy_cart_all" method="post">
+                <button class="btn btn-primary">Купить все</button>
+            </form>
+            <form action="/game/remove_cart_all" method="post">
+                <button class="btn btn-primary mx-3">Убрать все</button>
+            </form>
+        </div>
+    </div>
+    <div class="pt-5"></div>
+</main>
+
+<hr class="clear">
+
+<footer th:insert="blocks/footer :: footer" class="footer mt-auto py-1 bg-dark"></footer>
+
+
+</body>
+
+</html>
