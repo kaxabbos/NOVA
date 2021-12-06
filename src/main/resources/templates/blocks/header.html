@@ -9,7 +9,9 @@
                     <li th:if="${role == 'ADMIN' || role == 'PUB'}">
                         <a href="/game/add" class="nav-link px-2 text-white">Добавить игру</a>
                     </li>
-                    <li><a href="/cart" class="nav-link px-2 text-white">Корзина</a></li>
+                    <li th:if="${role == 'USER' || role == 'PUB'}">
+                        <a href="/cart" class="nav-link px-2 text-white">Корзина</a>
+                    </li>
                 </ul>
                 <form th:if="${role != 'NOT'}" action="/catalog/search" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3"
                       method="post">
