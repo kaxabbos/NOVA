@@ -3,10 +3,6 @@ package com.nova.controllers;
 import com.nova.models.Comments;
 import com.nova.models.Games;
 import com.nova.models.Users;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -25,7 +21,7 @@ public class GameCont extends Main {
     public String game(@PathVariable(value = "id") Long id, Model model) {
         if (!repoGames.existsById(id)) return "redirect:/catalog";
         long userid = 0, userIdFromBD, gameid = 0, cart = 1, buy = 1;
-        Users userFromDB = new Users();
+        Users userFromDB = checkUser();
 
         Optional<Games> temp = repoGames.findById(id);
         List<Games> games = new ArrayList<>();
@@ -35,12 +31,6 @@ public class GameCont extends Main {
             userid = g.getUserid();
             gameid = g.getId();
             break;
-        }
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
         }
 
         userIdFromBD = userFromDB.getId();
@@ -81,14 +71,7 @@ public class GameCont extends Main {
 
         String username = "";
 
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) {
-                Users userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-                username = userFromDB.getUsername();
-            }
-        }
+        username = checkUser().getUsername();
 
         Comments c = new Comments(id, username, date, com.toString());
 

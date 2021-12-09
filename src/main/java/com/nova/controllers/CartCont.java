@@ -2,10 +2,6 @@ package com.nova.controllers;
 
 import com.nova.models.Games;
 import com.nova.models.Users;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,15 +17,7 @@ public class CartCont extends Main {
 
     @GetMapping("/cart")
     public String cart(Model model) {
-        Users userFromDB = new Users();
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) {
-                userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-            }
-        }
+        Users userFromDB = checkUser();
 
         if (userFromDB.getCart() != null) {
             long[] cart = userFromDB.getCart();
@@ -57,13 +45,7 @@ public class CartCont extends Main {
 
     @PostMapping("/game/{id}/add_cart")
     public String add_cart(@PathVariable(value = "id") Long id) {
-        Users userFromDB = new Users();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-        }
+        Users userFromDB = checkUser();
 
         long[] cart;
         if (userFromDB.getCart() == null) cart = new long[]{id};
@@ -81,13 +63,7 @@ public class CartCont extends Main {
 
     @PostMapping("/game/{id}/remove_cart")
     public String remove_cart(@PathVariable(value = "id") Long id) {
-        Users userFromDB = new Users();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-        }
+        Users userFromDB = checkUser();
 
         if (userFromDB.getCart().length == 1) userFromDB.setCart(null);
         else {
@@ -107,13 +83,7 @@ public class CartCont extends Main {
 
     @PostMapping("/game/remove_cart_all")
     public String remove_cart_all(Model model) {
-        Users userFromDB = new Users();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-        }
+        Users userFromDB = checkUser();
 
         userFromDB.setCart(null);
 
@@ -123,13 +93,7 @@ public class CartCont extends Main {
 
     @PostMapping("/game/{id}/buy")
     public String buy(@PathVariable(value = "id") Long id) {
-        Users userFromDB = new Users();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-        }
+        Users userFromDB = checkUser();
 
         if (userFromDB.getCart() != null) {
             if (userFromDB.getCart().length == 1) userFromDB.setCart(null);
@@ -172,13 +136,7 @@ public class CartCont extends Main {
 
     @PostMapping("/game/buy_cart_all")
     public String buy_cart_all(Model model) {
-        Users userFromDB = new Users();
-
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
-            UserDetails userDetail = (UserDetails) auth.getPrincipal();
-            if (userDetail != null) userFromDB = repoUsers.findByUsername(userDetail.getUsername());
-        }
+        Users userFromDB = checkUser();
 
         long[] buy;
         if (userFromDB.getBuy() == null) {

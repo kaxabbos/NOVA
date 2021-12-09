@@ -35,17 +35,15 @@ public class Games {
     private int
             year,
             ram,
-            place;
+            place,
+            count;
 
     private GBMB switchram, switchplace;
 
-    private float version, price;
+    private float version, price, income;
 
     private Genre genre;
     private Language language;
-
-    private int count;
-    private float income;
 
     public Games() {
     }

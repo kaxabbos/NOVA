@@ -37,4 +37,14 @@ public class Main {
         }
         return "NOT";
     }
+    Users checkUser() {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
+            UserDetails userDetail = (UserDetails) auth.getPrincipal();
+            if (userDetail != null) {
+                return repoUsers.findByUsername(userDetail.getUsername());
+            }
+        }
+        return null;
+    }
 }
