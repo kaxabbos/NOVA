@@ -1,5 +1,9 @@
+.mvn/*
 .idea/*
 .target/*
+
+.gitignore
+.gitattributes
 
 # Compiled class file
 *.class
