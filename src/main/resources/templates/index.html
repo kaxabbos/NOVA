@@ -15,6 +15,9 @@
 <hr class="clear">
 
 <main class="container-lg flex-shrink-0 bg-light">
+    <div th:if="${message}" class="col-lg-12 w-100 alert alert-primary" role="alert">
+        <p th:text="${message}"></p>
+    </div>
     <div class="row">
         <div class="col-lg-4">
             <div class="pt-5 px-5 mx-auto">

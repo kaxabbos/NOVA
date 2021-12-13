@@ -1,5 +1,6 @@
 package com.nova.controllers;
 
+import com.nova.models.GameIncome;
 import com.nova.models.Games;
 import com.nova.models.Users;
 import org.springframework.stereotype.Controller;
@@ -116,20 +117,15 @@ public class CartCont extends Main {
             for (int i = 0; i < userFromDB.getBuy().length; i++) buy[i] = userFromDB.getBuy()[i];
             buy[userFromDB.getBuy().length] = id;
         }
-
-        Optional<Games> temp = repoGames.findById(id);
-        List<Games> games = new ArrayList<>();
-        temp.ifPresent(games::add);
-
-        for (Games g : games) {
-            g.setCount(g.getCount() + 1);
-            g.setIncome(g.getIncome() + g.getPrice());
-            repoGames.save(g);
-            break;
-        }
-
         userFromDB.setBuy(buy);
 
+        GameIncome g = repoGameIncome.findByGameid(id);
+
+        g.setCount(g.getCount() + 1);
+        g.setIncome(g.getIncome() + g.getPrice());
+
+
+        repoGameIncome.save(g);
         repoUsers.save(userFromDB);
         return "redirect:/game/{id}";
     }
@@ -141,7 +137,15 @@ public class CartCont extends Main {
         long[] buy;
         if (userFromDB.getBuy() == null) {
             buy = new long[userFromDB.getCart().length];
-            for (int i = 0; i < userFromDB.getCart().length; i++) buy[i] = userFromDB.getCart()[i];
+            for (int i = 0; i < userFromDB.getCart().length; i++) {
+                buy[i] = userFromDB.getCart()[i];
+
+                GameIncome g = repoGameIncome.findByGameid(userFromDB.getCart()[i]);
+                g.setCount(g.getCount() + 1);
+                g.setIncome(g.getIncome() + g.getPrice());
+                repoGameIncome.save(g);
+            }
+
         } else {
             buy = new long[userFromDB.getBuy().length + userFromDB.getCart().length];
             for (int i = 0; i < buy.length; i++) {
@@ -151,15 +155,10 @@ public class CartCont extends Main {
                 }
                 for (int j = 0; j < userFromDB.getCart().length; j++) {
                     buy[i] = userFromDB.getCart()[j];
-                    Optional<Games> temp = repoGames.findById(userFromDB.getCart()[j]);
-                    List<Games> games = new ArrayList<>();
-                    temp.ifPresent(games::add);
-                    for (Games g : games) {
-                        g.setCount(g.getCount() + 1);
-                        g.setIncome(g.getIncome() + g.getPrice());
-                        repoGames.save(g);
-                        break;
-                    }
+                    GameIncome g = repoGameIncome.findByUserid(userFromDB.getCart()[j]);
+                    g.setCount(g.getCount() + 1);
+                    g.setIncome(g.getIncome() + g.getPrice());
+                    repoGameIncome.save(g);
                     i++;
                 }
             }

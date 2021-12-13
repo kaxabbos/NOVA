@@ -17,23 +17,15 @@ public class UserListCont extends Main {
 
     @GetMapping("/userList")
     public String userList(Model model) {
-        List<Games> games = repoGames.findAllByUserid(checkUser().getId());
-        float income = 0;
-        for (Games g : games) income += g.getIncome();
-
-        List<Users> users = repoUsers.findAll();
-
-        model.addAttribute("income", income);
-        model.addAttribute("games", games);
-        model.addAttribute("users", users);
+        model.addAttribute("users", repoUsers.findAll());
         model.addAttribute("role", checkUserRole());
         return "userList";
     }
 
     @PostMapping("/userList/{id}/edit")
-    public String userUpdate(Model model,
-                             @PathVariable(value = "id") Long id, @RequestParam String username,
-                             @RequestParam String password, @RequestParam Role role
+    public String userUpdate(
+            Model model, @PathVariable(value = "id") Long id, @RequestParam String username,
+            @RequestParam String password, @RequestParam Role role
     ) {
         Users temp = repoUsers.findById(id).orElseThrow();
         if (temp == checkUser())
@@ -56,13 +48,7 @@ public class UserListCont extends Main {
     public String userDelete(Model model, @PathVariable(value = "id") Long id) {
         Users temp = repoUsers.findById(id).orElseThrow();
         if (temp == checkUser()) {
-            List<Games> games = repoGames.findAllByUserid(checkUser().getId());
-            float income = 0;
-            for (Games g : games) income += g.getIncome();
-            List<Users> users = repoUsers.findAll();
-            model.addAttribute("income", income);
-            model.addAttribute("games", games);
-            model.addAttribute("users", users);
+            model.addAttribute("users", repoUsers.findAll());
             model.addAttribute("role", checkUserRole());
             model.addAttribute("message", "Вы не можете удалить себя!");
             return "userList";

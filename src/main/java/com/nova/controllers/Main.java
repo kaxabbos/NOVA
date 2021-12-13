@@ -1,15 +1,16 @@
 package com.nova.controllers;
 
+import com.nova.models.Games;
 import com.nova.models.Users;
-import com.nova.repo.RepoComments;
-import com.nova.repo.RepoGames;
-import com.nova.repo.RepoUsers;
+import com.nova.repo.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+
+import java.util.List;
 
 public class Main {
 
@@ -20,7 +21,13 @@ public class Main {
     RepoGames repoGames;
 
     @Autowired
-    RepoComments repoComments;
+    RepoGameComments repoComments;
+
+    @Autowired
+    RepoGameDescription repoGameDescription;
+
+    @Autowired
+    RepoGameIncome repoGameIncome;
 
     @Value("${upload.path}")
     String uploadPath;
@@ -37,6 +44,7 @@ public class Main {
         }
         return "NOT";
     }
+
     Users checkUser() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if ((!(auth instanceof AnonymousAuthenticationToken)) && auth != null) {
@@ -46,5 +54,48 @@ public class Main {
             }
         }
         return null;
+    }
+
+    void gameDeleteInCartAndBuy(long id) {
+        repoGames.deleteById(id);
+        List<Users> users = repoUsers.findAll();
+
+        for (Users user : users) {
+            if (user.getCart() != null) for (long carts : user.getCart())
+                if (id == carts) {
+                    if (user.getCart().length == 1) user.setCart(null);
+                    else {
+                        long[] cart = new long[user.getCart().length - 1];
+                        int i = 0;
+                        for (long c : user.getCart()) {
+                            if (id == c) continue;
+                            cart[i] = c;
+                            i++;
+                        }
+                        user.setCart(cart);
+                    }
+                }
+            if (user.getBuy() != null) for (long carts : user.getBuy())
+                if (id == carts) {
+                    if (user.getBuy().length == 1) user.setBuy(null);
+                    else {
+                        long[] cart = new long[user.getBuy().length - 1];
+                        int i = 0;
+                        for (long c : user.getBuy()) {
+                            if (id == c) continue;
+                            cart[i] = c;
+                            i++;
+                        }
+                        user.setBuy(cart);
+                    }
+                }
+        }
+
+        for (Users user : users) repoUsers.save(user);
+    }
+
+    long lastIndexGames() {
+        List<Games> gamesList = repoGames.findAll();
+        return gamesList.get(gamesList.size() - 1).getId();
     }
 }

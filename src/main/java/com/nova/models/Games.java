@@ -11,68 +11,33 @@ import javax.persistence.Id;
 
 @Entity
 public class Games {
-
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
     private long userid;
-
-    private String
-            name,
-            dev,
-            pub,
-            os,
-            proc,
-            videocard,
-            sound,
-            description,
-            file;
-
-    private String poster;
-    private String[] screenshots;
-
-    private int
-            year,
-            ram,
-            place,
-            count;
-
-    private GBMB switchram, switchplace;
-
-    private float version, price, income;
-
+    private String name, poster;
+    private int year;
+    private float price;
     private Genre genre;
+
+    private String dev, pub, os, proc, videocard, sound, description, file;
+
+    private int ram, place;
+
+    private float version;
+    private String[] screenshots;
+    private GBMB switchram, switchplace;
     private Language language;
 
     public Games() {
     }
 
-    public Games(
-            String name, String dev, String pub,
-            int year, float version, float price, Genre genre, Language language, String os,
-            String proc, String videocard, String sound, int ram, int place,
-            GBMB switchram, GBMB switchplace, String file
-    ) {
+    public Games(String name, int year, float price, Genre genre) {
         this.name = name;
-        this.dev = dev;
-        this.pub = pub;
         this.year = year;
-        this.version = version;
         this.price = price;
         this.genre = genre;
-        this.language = language;
-        this.os = os;
-        this.proc = proc;
-        this.videocard = videocard;
-        this.sound = sound;
-        this.ram = ram;
-        this.place = place;
-        this.switchram = switchram;
-        this.switchplace = switchplace;
-        this.file = file;
-        this.count = 0;
-        this.income = 0;
     }
 
     public long getId() {
@@ -95,70 +60,6 @@ public class Games {
         this.name = name;
     }
 
-    public String getDev() {
-        return dev;
-    }
-
-    public void setDev(String dev) {
-        this.dev = dev;
-    }
-
-    public String getPub() {
-        return pub;
-    }
-
-    public void setPub(String pub) {
-        this.pub = pub;
-    }
-
-    public String getOs() {
-        return os;
-    }
-
-    public void setOs(String os) {
-        this.os = os;
-    }
-
-    public String getProc() {
-        return proc;
-    }
-
-    public void setProc(String proc) {
-        this.proc = proc;
-    }
-
-    public String getVideocard() {
-        return videocard;
-    }
-
-    public void setVideocard(String videocard) {
-        this.videocard = videocard;
-    }
-
-    public String getSound() {
-        return sound;
-    }
-
-    public void setSound(String sound) {
-        this.sound = sound;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getFile() {
-        return file;
-    }
-
-    public void setFile(String file) {
-        this.file = file;
-    }
-
     public String getPoster() {
         return poster;
     }
@@ -167,60 +68,12 @@ public class Games {
         this.poster = poster;
     }
 
-    public String[] getScreenshots() {
-        return screenshots;
-    }
-
-    public void setScreenshots(String[] screenshots) {
-        this.screenshots = screenshots;
-    }
-
     public int getYear() {
         return year;
     }
 
     public void setYear(int year) {
         this.year = year;
-    }
-
-    public int getRam() {
-        return ram;
-    }
-
-    public void setRam(int ram) {
-        this.ram = ram;
-    }
-
-    public int getPlace() {
-        return place;
-    }
-
-    public void setPlace(int place) {
-        this.place = place;
-    }
-
-    public GBMB getSwitchram() {
-        return switchram;
-    }
-
-    public void setSwitchram(GBMB switchram) {
-        this.switchram = switchram;
-    }
-
-    public GBMB getSwitchplace() {
-        return switchplace;
-    }
-
-    public void setSwitchplace(GBMB switchplace) {
-        this.switchplace = switchplace;
-    }
-
-    public float getVersion() {
-        return version;
-    }
-
-    public void setVersion(float version) {
-        this.version = version;
     }
 
     public float getPrice() {
@@ -239,27 +92,81 @@ public class Games {
         this.genre = genre;
     }
 
+    public void addDescription(GameDescription gd){
+        dev = gd.getDev();
+        pub = gd.getPub();
+        os = gd.getOs();
+        proc = gd.getProc();
+        videocard = gd.getVideocard();
+        sound = gd.getSound();
+        description = gd.getDescription();
+        file = gd.getFile();
+        ram = gd.getRam();
+        place = gd.getPlace();
+        version = gd.getVersion();
+        screenshots = gd.getScreenshots();
+        switchram = gd.getSwitchram();
+        switchplace = gd.getSwitchplace();
+        language = gd.getLanguage();
+    }
+
+    public String getDev() {
+        return dev;
+    }
+
+    public String getPub() {
+        return pub;
+    }
+
+    public String getOs() {
+        return os;
+    }
+
+    public String getProc() {
+        return proc;
+    }
+
+    public String getVideocard() {
+        return videocard;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getFile() {
+        return file;
+    }
+
+    public int getRam() {
+        return ram;
+    }
+
+    public int getPlace() {
+        return place;
+    }
+
+    public float getVersion() {
+        return version;
+    }
+
+    public String[] getScreenshots() {
+        return screenshots;
+    }
+
+    public GBMB getSwitchram() {
+        return switchram;
+    }
+
+    public GBMB getSwitchplace() {
+        return switchplace;
+    }
+
     public Language getLanguage() {
         return language;
-    }
-
-    public void setLanguage(Language language) {
-        this.language = language;
-    }
-
-    public int getCount() {
-        return count;
-    }
-
-    public void setCount(int count) {
-        this.count = count;
-    }
-
-    public float getIncome() {
-        return income;
-    }
-
-    public void setIncome(float income) {
-        this.income = income;
     }
 }
