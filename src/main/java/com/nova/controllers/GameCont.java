@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,7 +20,8 @@ public class GameCont extends Main {
 
     @GetMapping("/game/{id}")
     public String game(@PathVariable(value = "id") Long id, Model model) {
-        if (!repoGames.existsById(id)) return "redirect:/catalog";
+        if (!repoGames.existsById(id)) return "redirect:/catalog/all";
+
 
         long userid = 0, userIdFromBD, gameid = 0, cart = 1, buy = 1;
         Users userFromDB = checkUser();
@@ -38,7 +40,6 @@ public class GameCont extends Main {
         userIdFromBD = userFromDB.getId();
         if (userIdFromBD == userid) model.addAttribute("userid", userid);
 
-        List<GameComments> comments = repoComments.findAllByGameid(gameid);
         if (userFromDB.getCart() != null) {
             long[] carts = userFromDB.getCart();
             for (long c : carts)
@@ -57,6 +58,10 @@ public class GameCont extends Main {
                 }
         }
 
+        List<GameComments> comments = repoComments.findAllByGameid(gameid);
+
+        Collections.reverse(comments);
+
         model.addAttribute("games", games);
         model.addAttribute("comments", comments);
         model.addAttribute("role", checkUserRole());
@@ -74,6 +79,7 @@ public class GameCont extends Main {
         GameComments c = new GameComments(id, checkUser().getUsername(), date, com.toString());
 
         repoComments.save(c);
+
         return "redirect:/game/{id}";
     }
 }

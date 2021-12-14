@@ -1,9 +1,6 @@
 package com.nova.controllers;
 
-import com.nova.models.GameDescription;
-import com.nova.models.GameIncome;
-import com.nova.models.Games;
-import com.nova.models.Users;
+import com.nova.models.*;
 import com.nova.models.enums.GBMB;
 import com.nova.models.enums.Genre;
 import com.nova.models.enums.Language;
@@ -178,8 +175,17 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/{id}/delete")
     public String game_delete(@PathVariable(value = "id") Long id) {
-
         gameDeleteInCartAndBuy(id);
+
+        repoGames.deleteById(id);
+        repoGameIncome.deleteById(id);
+        repoGameDescription.deleteById(id);
+
+        List<GameComments> comments = repoComments.findAllByGameid(id);
+
+        for (GameComments c : comments) {
+            repoComments.deleteById(c.getId());
+        }
 
         return "redirect:/catalog/all";
     }

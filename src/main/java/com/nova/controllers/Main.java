@@ -57,7 +57,6 @@ public class Main {
     }
 
     void gameDeleteInCartAndBuy(long id) {
-        repoGames.deleteById(id);
         List<Users> users = repoUsers.findAll();
 
         for (Users user : users) {

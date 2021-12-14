@@ -7,6 +7,7 @@ import javax.persistence.Id;
 public class GameIncome {
     @Id
     private long gameid;
+
     private long userid;
     private String gamename;
     private float income, price;
