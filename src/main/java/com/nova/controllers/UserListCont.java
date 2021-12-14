@@ -28,14 +28,26 @@ public class UserListCont extends Main {
             @RequestParam String password, @RequestParam Role role
     ) {
         Users temp = repoUsers.findById(id).orElseThrow();
-        if (temp == checkUser())
+
+        if (temp == checkUser()) {
+
             if (String.valueOf(temp.getRole()).equals(checkUserRole())) {
+
                 temp.setUsername(username);
                 temp.setPassword(password);
                 temp.setRole(role);
                 repoUsers.save(temp);
                 return "redirect:/index";
             }
+//            else if (String.valueOf(temp.getRole()).equals("USER")) {
+//                temp.setUsername(username);
+//                temp.setPassword(password);
+//                temp.setRole(role);
+//                repoUsers.save(temp);
+//                return "redirect:/index";
+//            }
+        }
+
 
         temp.setUsername(username);
         temp.setPassword(password);
@@ -47,12 +59,14 @@ public class UserListCont extends Main {
     @PostMapping("/userList/{id}/delete")
     public String userDelete(Model model, @PathVariable(value = "id") Long id) {
         Users temp = repoUsers.findById(id).orElseThrow();
+
         if (temp == checkUser()) {
             model.addAttribute("users", repoUsers.findAll());
             model.addAttribute("role", checkUserRole());
             model.addAttribute("message", "Вы не можете удалить себя!");
             return "userList";
         }
+
         repoUsers.deleteById(id);
         return "redirect:/userList";
     }

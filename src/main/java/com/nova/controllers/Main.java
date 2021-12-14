@@ -1,5 +1,7 @@
 package com.nova.controllers;
 
+import com.nova.models.GameComments;
+import com.nova.models.GameDescription;
 import com.nova.models.Games;
 import com.nova.models.Users;
 import com.nova.repo.*;
@@ -9,6 +11,7 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -56,7 +59,7 @@ public class Main {
         return null;
     }
 
-    void gameDeleteInCartAndBuy(long id) {
+    void totalGameDelete(long id) {
         List<Users> users = repoUsers.findAll();
 
         for (Users user : users) {
@@ -91,6 +94,22 @@ public class Main {
         }
 
         for (Users user : users) repoUsers.save(user);
+
+//        Games g = repoGames.findById(id);
+//        GameDescription gd = repoGameDescription.findByGameid(id);
+//        
+//
+//        MultipartFile[] multipartFiles = gd.getScreenshots();
+
+        repoGames.deleteById(id);
+        repoGameIncome.deleteById(id);
+        repoGameDescription.deleteById(id);
+
+        List<GameComments> comments = repoComments.findAllByGameid(id);
+
+        for (GameComments c : comments) {
+            repoComments.deleteById(c.getId());
+        }
     }
 
     long lastIndexGames() {

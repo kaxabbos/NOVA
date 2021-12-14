@@ -175,18 +175,7 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/{id}/delete")
     public String game_delete(@PathVariable(value = "id") Long id) {
-        gameDeleteInCartAndBuy(id);
-
-        repoGames.deleteById(id);
-        repoGameIncome.deleteById(id);
-        repoGameDescription.deleteById(id);
-
-        List<GameComments> comments = repoComments.findAllByGameid(id);
-
-        for (GameComments c : comments) {
-            repoComments.deleteById(c.getId());
-        }
-
+        totalGameDelete(id);
         return "redirect:/catalog/all";
     }
 }
