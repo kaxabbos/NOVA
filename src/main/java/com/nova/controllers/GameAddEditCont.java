@@ -40,6 +40,7 @@ public class GameAddEditCont extends Main {
         Games newGames = new Games(name, year, price, genre);
         GameDescription newGameDescription = new GameDescription(dev, pub, os, proc, videocard, sound, file, ram, place, version, switchram, switchplace, language);
         GameIncome newGameIncome = new GameIncome(name, price);
+        boolean createDir = true;
 
         StringBuilder des = new StringBuilder();
         for (String s : description) des.append(s);
@@ -48,12 +49,14 @@ public class GameAddEditCont extends Main {
         String uuidFile = UUID.randomUUID().toString();
 
         if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
-            String result_poster;
+            String result_poster = "";
             try {
                 File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) uploadDir.mkdir();
-                result_poster = uuidFile + "_" + poster.getOriginalFilename();
-                poster.transferTo(new File(uploadPath + "/" + result_poster));
+                if (!uploadDir.exists()) createDir = uploadDir.mkdir();
+                if (createDir) {
+                    result_poster = uuidFile + "_" + poster.getOriginalFilename();
+                    poster.transferTo(new File(uploadPath + "/" + result_poster));
+                }
             } catch (IOException e) {
                 model.addAttribute("message", "Ошибка, слишком большой размер постера!!!");
                 return "/";
@@ -112,6 +115,7 @@ public class GameAddEditCont extends Main {
     public String edit(Model model, @PathVariable(value = "id") Long id, @RequestParam String name, @RequestParam String dev, @RequestParam("poster") MultipartFile poster, @RequestParam("screenshots") MultipartFile[] screenshots, @RequestParam String pub, @RequestParam int year, @RequestParam float version, @RequestParam float price, @RequestParam Genre genre, @RequestParam Language language, @RequestParam String os, @RequestParam String proc, @RequestParam String videocard, @RequestParam String sound, @RequestParam int ram, @RequestParam int place, @RequestParam GBMB switchram, @RequestParam GBMB switchplace, @RequestParam String[] description, @RequestParam String file) {
         Games g = repoGames.findById(id).orElseThrow();
         GameDescription gd = repoGameDescription.findByGameid(id);
+        boolean createDir = true;
 
         StringBuilder des = new StringBuilder();
         for (String s : description) des.append(s);
@@ -138,12 +142,14 @@ public class GameAddEditCont extends Main {
         String uuidFile = UUID.randomUUID().toString();
 
         if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
-            String result_poster;
+            String result_poster = "";
             try {
                 File uploadDir = new File(uploadPath);
-                if (!uploadDir.exists()) uploadDir.mkdir();
-                result_poster = uuidFile + "_" + poster.getOriginalFilename();
-                poster.transferTo(new File(uploadPath + "/" + result_poster));
+                if (!uploadDir.exists()) createDir = uploadDir.mkdir();
+                if (createDir) {
+                    result_poster = uuidFile + "_" + poster.getOriginalFilename();
+                    poster.transferTo(new File(uploadPath + "/" + result_poster));
+                }
             } catch (IOException e) {
                 model.addAttribute("message", "Ошибка слишком большой размер постера");
                 return "/";
