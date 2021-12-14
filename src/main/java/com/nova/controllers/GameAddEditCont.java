@@ -1,6 +1,8 @@
 package com.nova.controllers;
 
-import com.nova.models.*;
+import com.nova.models.GameDescription;
+import com.nova.models.GameIncome;
+import com.nova.models.Games;
 import com.nova.models.enums.GBMB;
 import com.nova.models.enums.Genre;
 import com.nova.models.enums.Language;
@@ -14,16 +16,14 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Controller
 public class GameAddEditCont extends Main {
 
     @GetMapping("/game/add")
     public String game_add(Model model) {
+        if (!checkUserRole().equals("USER")) return "redirect:/index";
         model.addAttribute("role", checkUserRole());
         return "game_add";
     }
@@ -47,7 +47,7 @@ public class GameAddEditCont extends Main {
 
         String uuidFile = UUID.randomUUID().toString();
 
-        if (poster != null && !poster.getOriginalFilename().isEmpty()) {
+        if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
             String result_poster;
             try {
                 File uploadDir = new File(uploadPath);
@@ -61,7 +61,7 @@ public class GameAddEditCont extends Main {
             newGames.setPoster(result_poster);
         }
 
-        if (screenshots != null && !screenshots[0].getOriginalFilename().isEmpty()) {
+        if (screenshots != null && !Objects.requireNonNull(screenshots[0].getOriginalFilename()).isEmpty()) {
             String result_screenshot;
             String[] result_screenshots;
             try {
@@ -98,9 +98,10 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/{id}/edit")
     public String game_edit(@PathVariable(value = "id") Long id, Model model) {
+        if (!checkUserRole().equals("USER")) return "redirect:/index";
         if (!repoGames.existsById(id)) return "redirect:/catalog";
         Optional<Games> temp = repoGames.findById(id);
-        ArrayList<Games> games = new ArrayList<>();
+        List<Games> games = new ArrayList<>();
         temp.ifPresent(games::add);
         model.addAttribute("games", games);
         model.addAttribute("role", checkUserRole());
@@ -136,7 +137,7 @@ public class GameAddEditCont extends Main {
 
         String uuidFile = UUID.randomUUID().toString();
 
-        if (poster != null && !poster.getOriginalFilename().isEmpty()) {
+        if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
             String result_poster;
             try {
                 File uploadDir = new File(uploadPath);
@@ -150,7 +151,7 @@ public class GameAddEditCont extends Main {
             g.setPoster(result_poster);
         }
 
-        if (screenshots != null && !screenshots[0].getOriginalFilename().isEmpty()) {
+        if (screenshots != null && !Objects.requireNonNull(screenshots[0].getOriginalFilename()).isEmpty()) {
             String result_screenshot;
             String[] result_screenshots;
             try {
@@ -175,6 +176,7 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/{id}/delete")
     public String game_delete(@PathVariable(value = "id") Long id) {
+        if (!checkUserRole().equals("USER")) return "redirect:/index";
         totalGameDelete(id);
         return "redirect:/catalog/all";
     }

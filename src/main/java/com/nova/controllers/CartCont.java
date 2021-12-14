@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class CartCont extends Main {
@@ -119,13 +118,13 @@ public class CartCont extends Main {
         }
         userFromDB.setBuy(buy);
 
-        GameIncome g = repoGameIncome.findByGameid(id);
+        GameIncome gi = repoGameIncome.findByGameid(id);
 
-        g.setCount(g.getCount() + 1);
-        g.setIncome(g.getIncome() + g.getPrice());
+        gi.setCount(gi.getCount() + 1);
+        gi.setIncome(gi.getIncome() + gi.getPrice());
 
 
-        repoGameIncome.save(g);
+        repoGameIncome.save(gi);
         repoUsers.save(userFromDB);
         return "redirect:/game/{id}";
     }

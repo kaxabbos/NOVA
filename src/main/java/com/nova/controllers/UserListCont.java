@@ -27,47 +27,76 @@ public class UserListCont extends Main {
             Model model, @PathVariable(value = "id") Long id, @RequestParam String username,
             @RequestParam String password, @RequestParam Role role
     ) {
+        if (!checkUserRole().equals("ADMIN")) return "redirect:/index";
+
         Users temp = repoUsers.findById(id).orElseThrow();
 
         if (temp == checkUser()) {
+            if (String.valueOf(temp.getRole()).equals("ADMIN")) {
+                temp.setUsername(username);
+                temp.setPassword(password);
+                temp.setRole(role);
+                repoUsers.save(temp);
+                return "redirect:/userList";
+            } else if (!String.valueOf(temp.getRole()).equals("USER")) {
+                temp.setUsername(username);
+                temp.setPassword(password);
+                temp.setRole(role);
 
-            if (String.valueOf(temp.getRole()).equals(checkUserRole())) {
+                List<Games> gamesList = repoGames.findAllByUserid(checkUser().getId());
+                for (Games g : gamesList) {
+                    totalGameDelete(g.getId());
+                }
 
+                repoUsers.save(temp);
+                return "redirect:/index";
+            } else {
                 temp.setUsername(username);
                 temp.setPassword(password);
                 temp.setRole(role);
                 repoUsers.save(temp);
                 return "redirect:/index";
             }
-//            else if (String.valueOf(temp.getRole()).equals("USER")) {
-//                temp.setUsername(username);
-//                temp.setPassword(password);
-//                temp.setRole(role);
-//                repoUsers.save(temp);
-//                return "redirect:/index";
-//            }
         }
 
+        if ((temp.getRole() == Role.ADMIN || temp.getRole() == Role.PUB) && role == Role.USER) {
+            List<Games> gamesList = repoGames.findAllByUserid(temp.getId());
+            for (Games g : gamesList) {
+                totalGameDelete(g.getId());
+            }
+        }
 
         temp.setUsername(username);
         temp.setPassword(password);
         temp.setRole(role);
         repoUsers.save(temp);
+
         return "redirect:/userList";
     }
 
     @PostMapping("/userList/{id}/delete")
-    public String userDelete(Model model, @PathVariable(value = "id") Long id) {
+    public String userDelete(
+            Model model, @PathVariable(value = "id") Long id
+    ) {
         Users temp = repoUsers.findById(id).orElseThrow();
+        Users check = checkUser();
 
-        if (temp == checkUser()) {
+        if (temp == check) {
             model.addAttribute("users", repoUsers.findAll());
-            model.addAttribute("role", checkUserRole());
+            model.addAttribute("role", check.getRole());
             model.addAttribute("message", "Вы не можете удалить себя!");
             return "userList";
         }
 
+        if (temp.getRole() == Role.ADMIN || temp.getRole() == Role.PUB) {
+            List<Games> gamesList = repoGames.findAllByUserid(temp.getId());
+            for (Games g : gamesList) {
+                totalGameDelete(g.getId());
+            }
+        }
+
         repoUsers.deleteById(id);
+
         return "redirect:/userList";
     }
 }
