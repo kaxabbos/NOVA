@@ -7,6 +7,8 @@ import java.util.List;
 
 public interface RepoGameIncome extends JpaRepository<GameIncome, Long> {
     GameIncome findByGameid(long id);
+
     GameIncome findByUserid(long id);
+
     List<GameIncome> findAllByUserid(long id);
 }

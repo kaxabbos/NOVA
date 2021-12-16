@@ -25,20 +25,23 @@ public class CatalogCont extends Main {
 
     @PostMapping("/catalog/game_search")
     public String catalog_search(@RequestParam Genre genre, @RequestParam String date_range, Model model) {
-        List<Games> games = new ArrayList<>(), temp;
+        List<Games> games = new ArrayList<>(), res = new ArrayList<>(), temp;
 
-        if (genre == Genre.Бесплатные) {
+        if (genre == Genre.Все) {
+            games = repoGames.findAll();
+        } else if (genre == Genre.Бесплатные) {
             temp = repoGames.findAll();
             for (Games g : temp) if (g.getPrice() == 0) games.add(g);
         } else if (genre == Genre.Платные) {
             temp = repoGames.findAll();
             for (Games g : temp) if (g.getPrice() != 0) games.add(g);
-        } else games = repoGames.findAllByGenre(genre);
+        } else {
+            games = repoGames.findAllByGenre(genre);
+        }
 
         String[] date = date_range.split(" ");
         int with = Integer.parseInt(date[0]), before = Integer.parseInt(date[2]);
 
-        List<Games> res = new ArrayList<>();
         for (Games g : games) {
             System.out.println("1 " + g.getYear());
             if (with <= g.getYear() && g.getYear() <= before) {

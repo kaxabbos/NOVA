@@ -1,7 +1,6 @@
 package com.nova.controllers;
 
 import com.nova.models.GameComments;
-import com.nova.models.GameDescription;
 import com.nova.models.Games;
 import com.nova.models.Users;
 import com.nova.repo.*;
@@ -11,7 +10,6 @@ import org.springframework.security.authentication.AnonymousAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 

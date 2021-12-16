@@ -8,7 +8,10 @@ import java.util.List;
 
 public interface RepoGames extends JpaRepository<Games, Long> {
     List<Games> findAllByGenre(Genre genre);
+
     List<Games> findAllByYear(int year);
+
     List<Games> findAllByUserid(long userid);
+
     Games findById(long id);
 }
