@@ -23,7 +23,7 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/add")
     public String game_add(Model model) {
-        if (!checkUserRole().equals("USER")) return "redirect:/index";
+        if (checkUserRole().equals("USER")) return "redirect:/index";
         model.addAttribute("role", checkUserRole());
         return "game_add";
     }
@@ -101,7 +101,7 @@ public class GameAddEditCont extends Main {
 
     @GetMapping("/game/{id}/edit")
     public String game_edit(@PathVariable(value = "id") Long id, Model model) {
-        if (!checkUserRole().equals("USER")) return "redirect:/index";
+        if (checkUserRole().equals("USER")) return "redirect:/index";
         if (!repoGames.existsById(id)) return "redirect:/catalog";
         Optional<Games> temp = repoGames.findById(id);
         List<Games> games = new ArrayList<>();

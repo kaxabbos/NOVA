@@ -22,7 +22,6 @@ public class GameCont extends Main {
     public String game(@PathVariable(value = "id") Long id, Model model) {
         if (!repoGames.existsById(id)) return "redirect:/catalog/all";
 
-
         long userid = 0, userIdFromBD, gameid = 0, cart = 1, buy = 1;
         Users userFromDB = checkUser();
 
@@ -69,10 +68,7 @@ public class GameCont extends Main {
     }
 
     @PostMapping("/game/{id}/comment_add")
-    public String comment_add(
-            @PathVariable(value = "id") Long id,
-            @RequestParam String date, @RequestParam String[] comment
-    ) {
+    public String comment_add(@PathVariable(value = "id") Long id, @RequestParam String date, @RequestParam String[] comment) {
         StringBuilder com = new StringBuilder();
         for (String s : comment) com.append(s);
 

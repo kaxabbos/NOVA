@@ -1,10 +1,8 @@
 package com.nova.repo;
 
 import com.nova.models.GameDescription;
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-
-public interface RepoGameDescription extends CrudRepository<GameDescription, Long> {
+public interface RepoGameDescription extends JpaRepository<GameDescription, Long> {
     GameDescription findByGameid(long id);
 }

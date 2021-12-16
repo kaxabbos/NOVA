@@ -1,7 +1,6 @@
 package com.nova.controllers;
 
 import com.nova.models.GameIncome;
-import com.nova.models.Games;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +12,7 @@ public class SalesCont extends Main {
 
     @GetMapping("/sales")
     public String sales(Model model) {
+        if (checkUserRole().equals("USER")) return "redirect:/index";
         List<GameIncome> gameIncomes = repoGameIncome.findAllByUserid(checkUser().getId());
         float income = 0;
         for (GameIncome g : gameIncomes) income += g.getIncome();
