@@ -17,6 +17,7 @@ public class UserListCont extends Main {
 
     @GetMapping("/userList")
     public String userList(Model model) {
+//        if (!checkUserRole().equals("ADMIN")) return "redirect:/index";
         model.addAttribute("users", repoUsers.findAll());
         model.addAttribute("role", checkUserRole());
         return "userList";
@@ -27,8 +28,6 @@ public class UserListCont extends Main {
             Model model, @PathVariable(value = "id") Long id, @RequestParam String username,
             @RequestParam String password, @RequestParam Role role
     ) {
-        if (!checkUserRole().equals("ADMIN")) return "redirect:/index";
-
         Users temp = repoUsers.findById(id).orElseThrow();
 
         if (temp == checkUser()) {

@@ -30,8 +30,8 @@ public class Main {
     @Autowired
     RepoGameIncome repoGameIncome;
 
-    @Value("${upload.path}")
-    String uploadPath;
+    @Value("${upload.path_img}")
+    String uploadPathImg;
 
     String checkUserRole() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();

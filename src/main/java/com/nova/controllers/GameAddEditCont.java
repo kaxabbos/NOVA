@@ -52,11 +52,11 @@ public class GameAddEditCont extends Main {
         if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
             String result_poster = "";
             try {
-                File uploadDir = new File(uploadPath);
+                File uploadDir = new File(uploadPathImg);
                 if (!uploadDir.exists()) createDir = uploadDir.mkdir();
                 if (createDir) {
                     result_poster = uuidFile + "_" + poster.getOriginalFilename();
-                    poster.transferTo(new File(uploadPath + "/" + result_poster));
+                    poster.transferTo(new File(uploadPathImg + "/" + result_poster));
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Ошибка, слишком большой размер постера!!!");
@@ -73,7 +73,7 @@ public class GameAddEditCont extends Main {
                 result_screenshots = new String[screenshots.length];
                 for (int i = 0; i < result_screenshots.length; i++) {
                     result_screenshot = uuidFile + "_" + screenshots[i].getOriginalFilename();
-                    screenshots[i].transferTo(new File(uploadPath + "/" + result_screenshot));
+                    screenshots[i].transferTo(new File(uploadPathImg + "/" + result_screenshot));
                     result_screenshots[i] = result_screenshot;
                 }
             } catch (IOException e) {
@@ -145,11 +145,11 @@ public class GameAddEditCont extends Main {
         if (poster != null && !Objects.requireNonNull(poster.getOriginalFilename()).isEmpty()) {
             String result_poster = "";
             try {
-                File uploadDir = new File(uploadPath);
+                File uploadDir = new File(uploadPathImg);
                 if (!uploadDir.exists()) createDir = uploadDir.mkdir();
                 if (createDir) {
                     result_poster = uuidFile + "_" + poster.getOriginalFilename();
-                    poster.transferTo(new File(uploadPath + "/" + result_poster));
+                    poster.transferTo(new File(uploadPathImg + "/" + result_poster));
                 }
             } catch (IOException e) {
                 model.addAttribute("message", "Ошибка слишком большой размер постера");
@@ -166,7 +166,7 @@ public class GameAddEditCont extends Main {
                 result_screenshots = new String[screenshots.length];
                 for (int i = 0; i < result_screenshots.length; i++) {
                     result_screenshot = uuidFile + "_" + screenshots[i].getOriginalFilename();
-                    screenshots[i].transferTo(new File(uploadPath + "/" + result_screenshot));
+                    screenshots[i].transferTo(new File(uploadPathImg + "/" + result_screenshot));
                     result_screenshots[i] = result_screenshot;
                 }
             } catch (IOException e) {
