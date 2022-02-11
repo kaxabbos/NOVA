@@ -1,7 +1,7 @@
 package com.nova.controllers;
 
+import com.nova.models.GameAll;
 import com.nova.models.GameComments;
-import com.nova.models.Games;
 import com.nova.models.Users;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -10,10 +10,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Optional;
 
 @Controller
 public class GameCont extends Main {
@@ -22,22 +20,12 @@ public class GameCont extends Main {
     public String game(@PathVariable(value = "id") Long id, Model model) {
         if (!repoGames.existsById(id)) return "redirect:/catalog/all";
 
-        long userid = 0, userIdFromBD, gameid = 0, cart = 1, buy = 1;
+        GameAll gameAll = new GameAll(repoGames.findById(id).orElseThrow(), repoGameDescription.findByGameid(id));
+
+        long userid = 0, cart = 0, buy = 0;
         Users userFromDB = checkUser();
 
-        Optional<Games> temp = repoGames.findById(id);
-        List<Games> games = new ArrayList<>();
-        temp.ifPresent(games::add);
-
-        for (Games g : games) {
-            userid = g.getUserid();
-            gameid = g.getId();
-            g.addDescription(repoGameDescription.findByGameid(id));
-            break;
-        }
-
-        userIdFromBD = userFromDB.getId();
-        if (userIdFromBD == userid) model.addAttribute("userid", userid);
+        if (userFromDB.getId() == userid) model.addAttribute("userid", gameAll.getUserid());
 
         if (userFromDB.getCart() != null) {
             long[] carts = userFromDB.getCart();
@@ -57,11 +45,11 @@ public class GameCont extends Main {
                 }
         }
 
-        List<GameComments> comments = repoComments.findAllByGameid(gameid);
+        List<GameComments> comments = repoComments.findAllByGameid(gameAll.getId());
 
         Collections.reverse(comments);
 
-        model.addAttribute("games", games);
+        model.addAttribute("games", gameAll);
         model.addAttribute("comments", comments);
         model.addAttribute("role", checkUserRole());
         return "game";

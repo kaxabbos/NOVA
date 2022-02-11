@@ -15,51 +15,15 @@
 <hr class="clear">
 
 <main class="container-lg flex-shrink-0 bg-light">
-    <form action="/game/add" method="post" enctype="multipart/form-data">
+    <div th:if="${message}" class="col-lg-12 w-100 alert alert-primary mt-3" role="alert">
+        <p th:text="${message}"></p>
+    </div>
+    <form action="/game/add" method="post">
         <div class="row">
-            <div class="col-lg-12 input-group flex-nowrap size-150">
+            <div class="col-lg-6 input-group flex-nowrap size-150">
                 <label for="name" class="input-group-text">Название игры</label>
                 <input id="name" name="name" type="text" class="form-control" placeholder="Название игры"
                        required>
-            </div>
-            <div class="col-lg-6 size-150">
-                <div class="input-group">
-                    <label for="dev" class="input-group-text">Разработчик</label>
-                    <input id="dev" name="dev" type="text" class="form-control" placeholder="Разработчик"
-                           required>
-                </div>
-                <div class=" input-group">
-                    <label for="pub" class="input-group-text">Издатель</label>
-                    <input id="pub" name="pub" type="text" class="form-control"
-                           placeholder="Издатель" required>
-                </div>
-                <div class="input-group">
-                    <label for="poster" class="input-group-text">Постер</label>
-                    <input id="poster" name="poster" type="file" class="form-control" placeholder="Издатель"
-                           accept=".jpg,.jpeg,.png" required>
-                </div>
-                <div class="input-group">
-                    <label for="screenshots" class="input-group-text">Скриншоты</label>
-                    <input id="screenshots" name="screenshots" type="file" class="form-control"
-                           placeholder="Издатель" accept=".jpg,.jpeg,.png" required multiple>
-                </div>
-            </div>
-            <div class="col-lg-6 size-150">
-                <div class=" input-group">
-                    <label for="year" class="input-group-text">Год выпуска</label>
-                    <input id="year" name="year" min="1952" max="2025" type="number" maxlength="4"
-                           class="form-control" placeholder="Год выпуска" required>
-                </div>
-                <div class="input-group">
-                    <label for="version" class="input-group-text">Версия</label>
-                    <input id="version" name="version" type="number" step="0.01" min="0" class="form-control"
-                           placeholder="Версия" required>
-                </div>
-                <div class="input-group">
-                    <label for="price" class="input-group-text">Цена, $</label>
-                    <input id="price" name="price" type="number" step="0.01" min="0" max="1000"
-                           class="form-control" placeholder="Цена" required>
-                </div>
             </div>
             <div class="col-lg-6 size-150">
                 <div class="input-group">
@@ -75,81 +39,10 @@
                     </select>
                 </div>
             </div>
-            <div class="col-lg-6 size-150">
-                <div class="input-group">
-                    <label for="language" class="input-group-text">Выберите язык</label>
-                    <select id="language" name="language" class="form-control">
-                        <option value="Английский">Английский</option>
-                        <option value="Испанский">Испанский</option>
-                        <option value="Русский">Русский</option>
-                        <option value="Французский">Французский</option>
-                        <option value="Португальский">Португальский</option>
-                        <option value="Китайский">Китайский</option>
-                    </select>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <h4>Системные требования</h4>
-                <div class="row">
-                    <div class="col-lg-6 size-200">
-                        <div class="input-group">
-                            <label for="os" class="input-group-text">Операционая система</label>
-                            <input id="os" name="os" type="text" class="form-control"
-                                   placeholder="Операционная система" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="proc" class="input-group-text">Процессор</label>
-                            <input id="proc" name="proc" type="text" class="form-control"
-                                   placeholder="Процессор" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="videocard" class="input-group-text">Видеокарта</label>
-                            <input id="videocard" name="videocard" type="text" class="form-control"
-                                   placeholder="Видеокарта" required>
-                        </div>
-                    </div>
-                    <div class="col-lg-6 size-200">
-                        <div class="input-group">
-                            <label for="ram" class="input-group-text">Оперативная память</label>
-                            <input id="ram" name="ram" type="number" step="1" min="0" max="1024"
-                                   class="form-control" placeholder="Оперативная память" required>
-                            <select id="switchram" name="switchram" class="form-control">
-                                <option value="GB">GB</option>
-                                <option value="MB">MB</option>
-                            </select>
-                        </div>
-                        <div class="input-group">
-                            <label for="sound" class="input-group-text">Звуковое устройство</label>
-                            <input id="sound" name="sound" type="text" class="form-control"
-                                   placeholder="Звуковое устройство" required>
-                        </div>
-                        <div class="input-group">
-                            <label for="place" class="input-group-text">Занимаемое место</label>
-                            <input id="place" name="place" type="number" step="1" min="0" max="1024"
-                                   class="form-control" placeholder="Занимаемое место" required>
-                            <select id="switchplace" name="switchplace" class="form-control">
-                                <option value="GB">GB</option>
-                                <option value="MB">MB</option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-lg-12">
-                <h4><label for="description">Описание</label></h4>
-                <textarea class="form-control" name="description" id="description" required></textarea>
-            </div>
-            <div class="col-lg-12">
-                <div class="input-group">
-                    <label for="file" class="input-group-text">Добавить ссылку на игру</label>
-                    <input id="file" name="file" type="text" class="form-control" placeholder="Добавить ссылку на игру"
-                           required>
-                </div>
-            </div>
         </div>
-        <button class="btn btn-lg btn-primary" type="submit">Добавить игру</button>
+        <button class="btn btn-lg btn-primary" type="submit">Проверить</button>
         <button class="btn btn-lg btn-primary" type="reset">Очистить</button>
-        <a class="btn btn-lg btn-primary" href="/catalog/all">Отмена</a>
+        <a class="btn btn-lg btn-primary" onclick="history.back(); return false;" >Отмена</a>
     </form>
     <div class="pt-3"></div>
 </main>

@@ -37,19 +37,22 @@
                 <form class="input-group" th:action="'/userList/' + ${user.id} + '/edit'" method="post">
                     <input class="form-control" th:value="${user.username}" name="username"/>
                     <input class="form-control" th:value="${user.password}" name="password"/>
-                    <!--                    <span class="form-control" th:text="${user.role}"></span>-->
-                    <div class="form-control" th:switch="${user.role}">
-                        <span th:case="'ADMIN'">1</span>
-                        <span th:case="'USER'">2</span>
-                        <span th:case="'PUB'">3</span>
-                        <span th:case="'admin'">4</span>
-                        <span th:case="'user'">5</span>
-                        <span th:case="'oub'">6</span>
-                        <span th:case="#{role.ADMIN}">6</span>
-                        <span th:case="#{role.admin}">6</span>
-                        <span th:case="'oub'">6</span>
-                        <span th:case="*">def</span>
-                    </div>
+                    <span class="form-control" th:text="${user.role}"></span>
+                    <!--                    <div class="form-control" th:switch="${user.role}">-->
+                    <!--                        <span th:case="#{true}">1</span>-->
+                    <!--                        <span th:case="'ADMIN'">1</span>-->
+                    <!--                        <span th:case="'USER'">2</span>-->
+                    <!--                        <span th:case="'PUB'">3</span>-->
+                    <!--                        <span th:case="'admin'">4</span>-->
+                    <!--                        <span th:case="'user'">5</span>-->
+                    <!--                        <span th:case="'pub'">6</span>-->
+                    <!--                        <span th:case="#{role.ADMIN}">6</span>-->
+                    <!--                        <span th:case="#{roles.ADMIN}">6</span>-->
+                    <!--                        <span th:case="#{role.admin}">6</span>-->
+                    <!--                        <span th:case="#{roles.admin}">6</span>-->
+                    <!--                        <span th:case="'pub'">6</span>-->
+                    <!--                        <span th:case="*">def</span>-->
+                    <!--                    </div>-->
                     <select class="form-control" name="role">
                         <option value="USER">Покупатель</option>
                         <option value="PUB">Продавец</option>

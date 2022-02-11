@@ -18,80 +18,168 @@
         <p th:text="${message}"></p>
     </div>
     <div class="row">
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Action"><img class="main_img" src="/img/action.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Action" class="btn btn-primary">Action</a>
+        <div id="carouselExampleCaptions" class="carousel slide carousel-fade w-100" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active"
+                        aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1"
+                        aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2"
+                        aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3"
+                        aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4"
+                        aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5"
+                        aria-label="Slide 6"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6"
+                        aria-label="Slide 7"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7"
+                        aria-label="Slide 8"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8"
+                        aria-label="Slide 9"></button>
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a href="/catalog/genre/Action"><img src="/img/action.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Action</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/Shooter"><img src="/img/shooter.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Shooter</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/Стратегия"><img src="/img/strategy.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Стратегия</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/RPG"><img src="/img/rpg.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>RPG</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/MMO"><img src="/img/mmo.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>MMO</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/Симулятор"><img src="/img/simulator.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Симулятор</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/MMORPG"><img src="/img/mmorpg.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>MMORPG</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/Бесплатные"><img src="/img/game.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Бесплатные</h1>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <a href="/catalog/genre/Платные"><img src="/img/game.jpg" class="d-block w-100"></a>
+                    <div class="carousel-caption d-none d-md-block">
+                        <h1>Платные</h1>
+                    </div>
                 </div>
             </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
         </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Shooter"><img class="main_img" src="/img/shooter.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Shooter" class="btn btn-primary">Shooter</a>
+        <!--        <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Action"><img class="main_img" src="/img/action.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Action" class="btn btn-primary">Action</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Стратегия"><img class="main_img" src="/img/strategy.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Стратегия" class="btn btn-primary">Стратегия</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Shooter"><img class="main_img" src="/img/shooter.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Shooter" class="btn btn-primary">Shooter</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/RPG"><img class="main_img" src="/img/rpg.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/RPG" class="btn btn-primary">RPG</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Стратегия"><img class="main_img" src="/img/strategy.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Стратегия" class="btn btn-primary">Стратегия</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/MMO"><img class="main_img" src="/img/mmo.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/MMO" class="btn btn-primary">MMO</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/RPG"><img class="main_img" src="/img/rpg.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/RPG" class="btn btn-primary">RPG</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Симулятор"><img class="main_img" src="/img/simulator.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Симулятор" class="btn btn-primary">Симулятор</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/MMO"><img class="main_img" src="/img/mmo.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/MMO" class="btn btn-primary">MMO</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/MMORPG"><img class="main_img" src="/img/mmorpg.jpg"></a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/MMORPG" class="btn btn-primary">MMOPRG</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Симулятор"><img class="main_img" src="/img/simulator.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Симулятор" class="btn btn-primary">Симулятор</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Бесплатные"><img class="main_img" src="/img/game.jpg"> </a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Бесплатные" class="btn btn-primary">Бесплатные</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/MMORPG"><img class="main_img" src="/img/mmorpg.jpg"></a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/MMORPG" class="btn btn-primary">MMOPRG</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
-        <div class="col-lg-4">
-            <div class="pt-5 px-5 mx-auto">
-                <a href="/catalog/genre/Платные"><img class="main_img" src="/img/game.jpg"> </a>
-                <div class="btn-group mt-3">
-                    <a href="/catalog/genre/Платные" class="btn btn-primary">Платные</a>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Бесплатные"><img class="main_img" src="/img/game.jpg"> </a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Бесплатные" class="btn btn-primary">Бесплатные</a>
+                        </div>
+                    </div>
                 </div>
-            </div>
-        </div>
+                <div class="col-lg-4">
+                    <div class="pt-5 px-5 mx-auto">
+                        <a href="/catalog/genre/Платные"><img class="main_img" src="/img/game.jpg"> </a>
+                        <div class="btn-group mt-3">
+                            <a href="/catalog/genre/Платные" class="btn btn-primary">Платные</a>
+                        </div>
+                    </div>
+                </div>-->
     </div>
-    <div class="pt-5"></div>
+<!--    <div class="pt-5"></div>-->
 </main>
 
 <hr class="clear">

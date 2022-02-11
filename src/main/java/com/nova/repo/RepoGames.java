@@ -13,5 +13,7 @@ public interface RepoGames extends JpaRepository<Games, Long> {
 
     List<Games> findAllByUserid(long userid);
 
+    Games findByNameAndGenre(String name, Genre genre);
+
     Games findById(long id);
 }

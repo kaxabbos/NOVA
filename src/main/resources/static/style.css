@@ -1,4 +1,4 @@
-body{
+body {
     background-image: url(../img/wall.jpg);
     background-repeat: no-repeat;
     background-position: center center;
@@ -26,7 +26,7 @@ footer div a img {
     height: 25px;
 }
 
-footer  {
+footer {
     font-size: 1.1em;
 }
 

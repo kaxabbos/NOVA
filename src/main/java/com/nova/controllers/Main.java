@@ -91,13 +91,7 @@ public class Main {
                 }
         }
 
-        for (Users user : users) repoUsers.save(user);
-
-//        Games g = repoGames.findById(id);
-//        GameDescription gd = repoGameDescription.findByGameid(id);
-//        
-//
-//        MultipartFile[] multipartFiles = gd.getScreenshots();
+        repoUsers.saveAll(users);
 
         repoGames.deleteById(id);
         repoGameIncome.deleteById(id);
@@ -114,4 +108,14 @@ public class Main {
         List<Games> gamesList = repoGames.findAll();
         return gamesList.get(gamesList.size() - 1).getId();
     }
+
+    void deleteNull() {
+        List<Games> gamesList = repoGames.findAll();
+        for (Games g : gamesList) {
+            if (g.getYear() == 0 && g.getPoster() == null) {
+                repoGames.deleteById(g.getId());
+            }
+        }
+    }
+
 }

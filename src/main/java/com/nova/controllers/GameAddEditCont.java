@@ -30,17 +30,47 @@ public class GameAddEditCont extends Main {
     }
 
     @PostMapping("game/add")
-    public String add(
-            Model model, @RequestParam String name, @RequestParam String dev,
-            @RequestParam("poster") MultipartFile poster, @RequestParam("screenshots") MultipartFile[] screenshots,
-            @RequestParam String pub, @RequestParam int year, @RequestParam float version, @RequestParam float price,
-            @RequestParam Genre genre, @RequestParam Language language, @RequestParam String os, @RequestParam String proc,
-            @RequestParam String videocard, @RequestParam String sound, @RequestParam int ram, @RequestParam int place,
-            @RequestParam GBMB switchram, @RequestParam GBMB switchplace, @RequestParam String[] description, @RequestParam String file
+    public String add(Model model, @RequestParam String name, @RequestParam Genre genre) {
+        List<Games> games = repoGames.findAll();
+        boolean next = true;
+
+        if (!games.isEmpty()) {
+            for (Games i : games) {
+                if (i.getName().equals(name) && i.getGenre().equals(genre)) {
+                    next = false;
+                    break;
+                }
+            }
+        }
+
+        model.addAttribute("role", checkUserRole());
+
+        if (next) {
+            Games newGames = new Games(name, genre);
+            repoGames.save(newGames);
+            model.addAttribute("id_game", repoGames.findByNameAndGenre(name, genre).getId());
+            return "game_add_complete";
+        }
+
+        model.addAttribute("message", "Игра с таким названием и жанром уже существует");
+        return "game_add";
+    }
+
+    @PostMapping("/game/add_complete")
+    public String add_complete(
+            Model model, @RequestParam int id_game,
+            @RequestParam String dev, @RequestParam("poster") MultipartFile poster,
+            @RequestParam("screenshots") MultipartFile[] screenshots, @RequestParam String pub, @RequestParam int year,
+            @RequestParam float version, @RequestParam float price, @RequestParam Language language,
+            @RequestParam String os, @RequestParam String proc, @RequestParam String videocard, @RequestParam String sound,
+            @RequestParam int ram, @RequestParam int place, @RequestParam GBMB switchram, @RequestParam GBMB switchplace,
+            @RequestParam String[] description, @RequestParam String file
     ) {
-        Games newGames = new Games(name, year, price, genre);
-        GameDescription newGameDescription = new GameDescription(dev, pub, os, proc, videocard, sound, file, ram, place, version, switchram, switchplace, language);
-        GameIncome newGameIncome = new GameIncome(name, price);
+        Games newGames = repoGames.findById(id_game);
+        newGames.setYear(year);
+        GameDescription newGameDescription = new GameDescription(
+                dev, pub, os, proc, videocard, sound, file, ram, place, version, switchram, switchplace, language);
+        GameIncome newGameIncome = new GameIncome(newGames.getName(), price);
         boolean createDir = true;
 
         StringBuilder des = new StringBuilder();
@@ -83,17 +113,14 @@ public class GameAddEditCont extends Main {
             newGameDescription.setScreenshots(result_screenshots);
         }
 
-        long id = checkUser().getId();
-        newGames.setUserid(id);
+        long id_user = checkUser().getId();
+        newGames.setUserid(id_user);
+
+        newGameDescription.setGameid(id_game);
+        newGameIncome.setGameid(id_game);
+        newGameIncome.setUserid(id_user);
 
         repoGames.save(newGames);
-
-        long i = lastIndexGames();
-
-        newGameDescription.setGameid(i);
-        newGameIncome.setGameid(i);
-        newGameIncome.setUserid(id);
-
         repoGameDescription.save(newGameDescription);
         repoGameIncome.save(newGameIncome);
 
@@ -101,7 +128,7 @@ public class GameAddEditCont extends Main {
     }
 
     @GetMapping("/game/{id}/edit")
-    public String game_edit(@PathVariable(value = "id") Long id, Model model) {
+    public String game_edit(Model model, @PathVariable(value = "id") Long id) {
         if (checkUserRole().equals("USER")) return "redirect:/index";
         if (!repoGames.existsById(id)) return "redirect:/catalog";
         Optional<Games> temp = repoGames.findById(id);
@@ -113,7 +140,15 @@ public class GameAddEditCont extends Main {
     }
 
     @PostMapping("/game/{id}/edit")
-    public String edit(Model model, @PathVariable(value = "id") Long id, @RequestParam String name, @RequestParam String dev, @RequestParam("poster") MultipartFile poster, @RequestParam("screenshots") MultipartFile[] screenshots, @RequestParam String pub, @RequestParam int year, @RequestParam float version, @RequestParam float price, @RequestParam Genre genre, @RequestParam Language language, @RequestParam String os, @RequestParam String proc, @RequestParam String videocard, @RequestParam String sound, @RequestParam int ram, @RequestParam int place, @RequestParam GBMB switchram, @RequestParam GBMB switchplace, @RequestParam String[] description, @RequestParam String file) {
+    public String edit(
+            Model model, @PathVariable(value = "id") Long id, @RequestParam String name, @RequestParam String dev,
+            @RequestParam("poster") MultipartFile poster, @RequestParam("screenshots") MultipartFile[] screenshots,
+            @RequestParam String pub, @RequestParam int year, @RequestParam float version, @RequestParam float price,
+            @RequestParam Genre genre, @RequestParam Language language, @RequestParam String os,
+            @RequestParam String proc, @RequestParam String videocard, @RequestParam String sound,
+            @RequestParam int ram, @RequestParam int place, @RequestParam GBMB switchram,
+            @RequestParam GBMB switchplace, @RequestParam String[] description, @RequestParam String file
+    ) {
         Games g = repoGames.findById(id).orElseThrow();
         GameDescription gd = repoGameDescription.findByGameid(id);
         boolean createDir = true;

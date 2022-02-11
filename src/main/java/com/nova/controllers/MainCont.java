@@ -9,18 +9,21 @@ public class MainCont extends Main {
 
     @GetMapping("/about")
     public String about(Model model) {
+        deleteNull();
         model.addAttribute("role", checkUserRole());
         return "about";
     }
 
     @GetMapping
     public String index1(Model model) {
+        deleteNull();
         model.addAttribute("role", checkUserRole());
         return "index";
     }
 
     @GetMapping("/index")
     public String index2(Model model) {
+        deleteNull();
         model.addAttribute("role", checkUserRole());
         return "index";
     }
