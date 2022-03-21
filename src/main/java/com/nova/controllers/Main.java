@@ -104,11 +104,6 @@ public class Main {
         }
     }
 
-    long lastIndexGames() {
-        List<Games> gamesList = repoGames.findAll();
-        return gamesList.get(gamesList.size() - 1).getId();
-    }
-
     void deleteNull() {
         List<Games> gamesList = repoGames.findAll();
         for (Games g : gamesList) {
