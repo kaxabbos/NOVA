@@ -13,7 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
 
-public class Main {
+public class Global {
 
     @Autowired
     RepoUsers repoUsers;

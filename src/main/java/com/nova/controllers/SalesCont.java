@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.util.List;
 
 @Controller
-public class SalesCont extends Main {
+public class SalesCont extends Global {
 
     @GetMapping("/sales")
     public String sales(Model model) {

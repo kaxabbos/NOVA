@@ -1,8 +1,6 @@
 package com.nova.models;
 
-import com.nova.models.enums.GBMB;
 import com.nova.models.enums.Genre;
-import com.nova.models.enums.Language;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +9,7 @@ import javax.persistence.Id;
 
 @Entity
 public class Games {
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;

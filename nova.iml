@@ -6,7 +6,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/src" relative="/" />
         </webroots>
-        <sourceRoots />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">

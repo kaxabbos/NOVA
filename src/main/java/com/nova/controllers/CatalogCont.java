@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class CatalogCont extends Main {
+public class CatalogCont extends Global {
 
     @GetMapping("/catalog/all")
     public String catalog_main(Model model) {

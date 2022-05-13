@@ -14,7 +14,7 @@ import java.util.Collections;
 import java.util.List;
 
 @Controller
-public class GameCont extends Main {
+public class GameCont extends Global {
 
     @GetMapping("/game/{id}")
     public String game(@PathVariable(value = "id") Long id, Model model) {

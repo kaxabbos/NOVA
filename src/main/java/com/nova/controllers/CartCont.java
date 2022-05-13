@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-public class CartCont extends Main {
+public class CartCont extends Global {
 
     @GetMapping("/cart")
     public String cart(Model model) {

@@ -5,14 +5,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 @Controller
-public class MainCont extends Main {
-
-    @GetMapping("/about")
-    public String about(Model model) {
-        deleteNull();
-        model.addAttribute("role", checkUserRole());
-        return "about";
-    }
+public class IndexCont extends Global {
 
     @GetMapping
     public String index1(Model model) {

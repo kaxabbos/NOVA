@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.List;
 
 @Controller
-public class UserListCont extends Main {
+public class UserListCont extends Global {
 
     @GetMapping("/userList")
     public String userList(Model model) {

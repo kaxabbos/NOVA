@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
-public class LoginRegCont extends Main{
+public class LoginRegCont extends Global {
 
     @GetMapping("/login")
     public String login(Model model) {

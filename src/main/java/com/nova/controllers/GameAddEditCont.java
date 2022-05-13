@@ -20,7 +20,7 @@ import java.io.IOException;
 import java.util.*;
 
 @Controller
-public class GameAddEditCont extends Main {
+public class GameAddEditCont extends Global {
 
     @GetMapping("/game/add")
     public String game_add(Model model) {
