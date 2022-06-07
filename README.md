@@ -1,1 +1,1 @@
-# Shop website «NOVA»
+# Accounting for sales of computer games
